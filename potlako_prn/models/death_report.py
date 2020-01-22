@@ -1,18 +1,20 @@
+from edc_action_item.model_mixins import ActionModelMixin
+from edc_base.sites.managers import CurrentSiteManager
+from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
-from edc_base.sites import SiteModelMixin
 from edc_identifier.managers import SubjectIdentifierManager
-from edc_search.model_mixins import SearchSlugModelMixin
 
-from edc_action_item.model_mixins.action_model_mixin import ActionModelMixin
-
-from .death_report_model_mixin import DeathReportModelMixin
+from ..action_items import DEATH_REPORT_ACTION
 
 
-class DeathReport(DeathReportModelMixin, ActionModelMixin,
-                          SiteModelMixin, SearchSlugModelMixin, BaseUuidModel):
+class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
 
-    tracking_identifier_prefix = 'PD'
+    action_name = DEATH_REPORT_ACTION
+
+    tracking_identifier = 'DR'
+
+    on_site = CurrentSiteManager()
 
     objects = SubjectIdentifierManager()
 
