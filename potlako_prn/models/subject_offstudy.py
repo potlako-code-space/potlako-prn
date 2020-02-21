@@ -13,9 +13,12 @@ from edc_visit_schedule.model_mixins import OffScheduleModelMixin
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
 from ..action_items import SUBJECT_OFFSTUDY_ACTION
+from ..choices import REASON_FOR_EXIT
+from potlako_prn.models.offstudy_model_mixin import OffStudyMixin
 
 
-class SubjectOffStudy(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
+class SubjectOffStudy(
+        OffScheduleModelMixin, ActionModelMixin, OffStudyMixin, BaseUuidModel):
 
     action_name = SUBJECT_OFFSTUDY_ACTION
 
@@ -39,6 +42,7 @@ class SubjectOffStudy(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
     reason = models.CharField(
         verbose_name='Reason for exit',
         max_length=50,
+        choices=REASON_FOR_EXIT,
         null=True,)
 
     objects = SubjectIdentifierManager()
