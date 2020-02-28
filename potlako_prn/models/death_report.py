@@ -6,9 +6,11 @@ from edc_base.model_mixins import BaseUuidModel
 from edc_identifier.managers import SubjectIdentifierManager
 
 from ..action_items import DEATH_REPORT_ACTION
+from .death_report_model_mixin import DeathReportModelMixin
 
 
-class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
+class DeathReport(
+        DeathReportModelMixin, SiteModelMixin, ActionModelMixin, BaseUuidModel):
 
     action_name = DEATH_REPORT_ACTION
 

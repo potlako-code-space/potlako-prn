@@ -9,7 +9,7 @@ from edc_protocol.validators import datetime_not_before_study_start
 
 from edc_base.model_fields import OtherCharField
 from ..choices import MED_RESPONSIBILITY, HOSPITILIZATION_REASONS
-from ..choices import SOURCE_OF_DEATH_INFO, CAUSE_OF_DEATH_CAT
+from ..choices import DEATH_INFO_SOURCE, CAUSE_OF_DEATH_CAT
 
 
 class DeathReportModelMixin(models.Model):
@@ -29,7 +29,7 @@ class DeathReportModelMixin(models.Model):
 
     cause = models.CharField(
         max_length=100,
-        choices=SOURCE_OF_DEATH_INFO,
+        choices=DEATH_INFO_SOURCE,
         verbose_name=('what is the primary source of '
                       ' cause of death information? '
                       '(if multiple source of information, '
@@ -80,7 +80,7 @@ class DeathReportModelMixin(models.Model):
 
     reason_hospitalized = models.CharField(
         choices=HOSPITILIZATION_REASONS,
-        max_length=50,
+        max_length=100,
         verbose_name=('if yes, hospitalized, what was the primary reason'
                       ' for hospitalisation? '),
         blank=True,

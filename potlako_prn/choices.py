@@ -2,6 +2,15 @@ from edc_constants.constants import OTHER, POS, NEG, NONE, UNKNOWN
 
 MISSING = 'missing'
 
+CAUSE_OF_DEATH_CAT = (
+    ('hiv_related', 'HIV infection or HIV related diagnosis'),
+    ('hiv_unrelated', 'Disease unrelated to HIV'),
+    ('study_drug', 'Toxicity from Study Drug'),
+    ('non_study_drug', 'Toxicity from non-Study drug'),
+    ('trauma', 'Trauma/Accident'),
+    ('no_info', 'No information available'),
+    (OTHER, 'Other, specify'),)
+
 COMPONENTS_RECEIVED = (
     ('provider_edication', 'Provider education'),
     ('diagnostic_facilitation', 'Diagnostic facilitation (pre-biopsy/test)'),
