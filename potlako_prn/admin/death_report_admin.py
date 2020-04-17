@@ -29,8 +29,6 @@ class DeathReportAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'illness_duration',
                 'medical_responsibility',
                 'participant_hospitalized',
-                'reason_hospitalized',
-                'reason_hospitalized_other',
                 'days_hospitalized',
                 'comment', ]}
          ), audit_fieldset_tuple)
@@ -40,5 +38,4 @@ class DeathReportAdmin(ModelAdminMixin, admin.ModelAdmin):
         'cause_category': admin.VERTICAL,
         'perform_autopsy': admin.VERTICAL,
         'medical_responsibility': admin.VERTICAL,
-        'participant_hospitalized': admin.VERTICAL,
-        'reason_hospitalized': admin.VERTICAL}
+        'participant_hospitalized': admin.VERTICAL, }

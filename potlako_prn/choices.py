@@ -4,9 +4,9 @@ MISSING = 'missing'
 
 CAUSE_OF_DEATH_CAT = (
     ('hiv_related', 'HIV infection or HIV related diagnosis'),
+    ('cancer', 'Cancer'),
+    ('cancer_related_diseases', 'Cancer related diseases'),
     ('hiv_unrelated', 'Disease unrelated to HIV'),
-    ('study_drug', 'Toxicity from Study Drug'),
-    ('non_study_drug', 'Toxicity from non-Study drug'),
     ('trauma', 'Trauma/Accident'),
     ('no_info', 'No information available'),
     (OTHER, 'Other, specify'),)
@@ -25,9 +25,9 @@ COMPONENTS_RECEIVED = (
 )
 
 DEATH_INFO_SOURCE = (
+    ('death_certificate_review', 'Death Certificate Review'),
     ('clinician', 'Clinician'),
     ('next_of_kin1', 'Next of kin 1'),
-    ('next_of_kin2', 'Next of kin 2'),
     ('other_fam_member', 'Other family member'),
     (OTHER, 'Other (specify)'),
 )

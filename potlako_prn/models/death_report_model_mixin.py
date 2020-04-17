@@ -1,15 +1,15 @@
 from django.apps import apps as django_apps
 from django.core.exceptions import ValidationError
 from django.db import models
+from edc_base.model_fields import OtherCharField
 from edc_base.model_validators import date_not_future
 from edc_base.model_validators import datetime_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO
 from edc_protocol.validators import datetime_not_before_study_start
 
-from edc_base.model_fields import OtherCharField
-from ..choices import MED_RESPONSIBILITY, HOSPITILIZATION_REASONS
 from ..choices import DEATH_INFO_SOURCE, CAUSE_OF_DEATH_CAT
+from ..choices import MED_RESPONSIBILITY
 
 
 class DeathReportModelMixin(models.Model):
@@ -28,17 +28,14 @@ class DeathReportModelMixin(models.Model):
         verbose_name='Date of Death:')
 
     cause = models.CharField(
-        max_length=100,
+        max_length=50,
         choices=DEATH_INFO_SOURCE,
-        verbose_name=('what is the primary source of '
-                      ' cause of death information? '
-                      '(if multiple source of information, '
-                      'list one with the smallest number closest to the'
-                      ' top of the list)'
+        verbose_name=('What was the source o information about participant'
+                      'death?'
                       ))
 
     cause_other = OtherCharField(
-        max_length=100)
+        max_length=50)
 
     perform_autopsy = models.CharField(
         max_length=3,
@@ -58,7 +55,7 @@ class DeathReportModelMixin(models.Model):
     cause_category = models.CharField(
         max_length=50,
         choices=CAUSE_OF_DEATH_CAT,
-        verbose_name=('based on the description above, what category'
+        verbose_name=('Based on the description above, what category'
                       ' best defines the major cause of death?'))
 
     cause_category_other = OtherCharField()
@@ -78,21 +75,6 @@ class DeathReportModelMixin(models.Model):
         choices=YES_NO,
         verbose_name='Was the participant hospitalised before death?')
 
-    reason_hospitalized = models.CharField(
-        choices=HOSPITILIZATION_REASONS,
-        max_length=100,
-        verbose_name=('if yes, hospitalized, what was the primary reason'
-                      ' for hospitalisation? '),
-        blank=True,
-        null=True)
-
-    reason_hospitalized_other = models.TextField(
-        verbose_name=('if other illness or pathogen specify or non '
-                      'infectious reason, please specify below:'),
-        max_length=250,
-        blank=True,
-        null=True)
-
     days_hospitalized = models.IntegerField(
         verbose_name=('For how many days was the participant hospitalised'
                       ' during the illness immediately before death? '),
@@ -100,7 +82,7 @@ class DeathReportModelMixin(models.Model):
         default=0)
 
     comment = models.TextField(
-        max_length=500,
+        max_length=250,
         verbose_name='Comments',
         blank=True,
         null=True)
