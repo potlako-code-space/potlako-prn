@@ -50,7 +50,7 @@ class OffStudyMixin(models.Model):
     death_info_source = models.CharField(
         verbose_name='Source of patient death information ',
         choices=DEATH_INFO_SOURCE,
-        max_length=20,
+        max_length=25,
         blank=True,
         null=True,)
 
