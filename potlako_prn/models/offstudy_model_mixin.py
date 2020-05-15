@@ -3,9 +3,8 @@ from edc_base.model_fields import OtherCharField
 from edc_base.model_validators import date_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
-from ..choices import (
-    COMPONENTS_RECEIVED, DEATH_INFO_SOURCE, DISTRICT, FACILITY, FACILITY_TYPE,
-    LTFU_CRITERIA, PLACE_OF_DEATH, POS_NEG_UNKNOWN_MISSING, TREATMENT_INTENT)
+from ..choices import COMPONENTS_RECEIVED, FACILITY, FACILITY_TYPE, DATE_ESTIMATION
+from ..choices import LTFU_CRITERIA, POS_NEG_UNKNOWN_MISSING, TREATMENT_INTENT
 
 
 class OffStudyMixin(models.Model):
@@ -21,69 +20,21 @@ class OffStudyMixin(models.Model):
     last_visit_facility = models.CharField(
         verbose_name='What was the facility of the patient\'s last visit',
         choices=FACILITY,
-        max_length=30,)
+        max_length=40,)
 
-    death_date = models.DateField(
-        verbose_name='Date of patient death',
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,)
-
-    cause_of_death = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,)
-
-    place_of_death = models.CharField(
-        choices=PLACE_OF_DEATH,
-        max_length=30,
-        blank=True,
-        null=True,)
-
-    facility_patient_died = models.CharField(
-        verbose_name='Name of facility where patient died',
-        choices=FACILITY,
-        max_length=30,
-        blank=True,
-        null=True,)
-
-    death_info_source = models.CharField(
-        verbose_name='Source of patient death information ',
-        choices=DEATH_INFO_SOURCE,
-        max_length=25,
-        blank=True,
-        null=True,)
-
-    info_source_other = OtherCharField(
-        verbose_name='If other source of patient death communication, '
-                     'describe',
-        max_length=20,)
+    last_visit_facility_other = OtherCharField()
 
     ltfu_criteria_met = models.CharField(
         verbose_name='Criteria met for loss to follow up',
         choices=LTFU_CRITERIA,
         max_length=50,
         blank=True,
-        null=True,)
+        null=True)
 
-    new_kgotla_res = models.CharField(
-        verbose_name='If relocated, patient\'s NEW Kgotla of residence',
-        max_length=25,
-        blank=True,
-        null=True,)
-
-    new_village_res = models.CharField(
-        verbose_name='If relocated, patient\'s NEW village of residence',
-        max_length=25,
-        blank=True,
-        null=True,)
-
-    new_district_res = models.CharField(
-        verbose_name='If relocated, patient\'s NEW district of residence',
-        choices=DISTRICT,
-        max_length=25,
-        blank=True,
-        null=True,)
+    patient_relocated = models.CharField(
+        verbose_name='Has the patient relocated?',
+        max_length=3,
+        choices=YES_NO,)
 
     new_facility_name = models.CharField(
         verbose_name='If relocated, patient\'s NEW facility name',
@@ -112,6 +63,21 @@ class OffStudyMixin(models.Model):
         verbose_name='If yes, please enter date of HIV test',
         blank=True,
         null=True,)
+
+    hiv_test_date_estimated = models.CharField(
+        verbose_name='Is the HIV test date estimated?',
+        choices=YES_NO,
+        max_length=3,
+        blank=True,
+        null=True,)
+
+    hiv_test_date_estimation = models.CharField(
+        verbose_name='Which part of the date was estimated, if any?',
+        choices=DATE_ESTIMATION,
+        max_length=15,
+        blank=True,
+        null=True
+    )
 
     review_flag = models.CharField(
         verbose_name='Flag for physician review',

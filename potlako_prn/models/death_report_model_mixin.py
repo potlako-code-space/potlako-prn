@@ -8,8 +8,8 @@ from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO
 from edc_protocol.validators import datetime_not_before_study_start
 
-from ..choices import DEATH_INFO_SOURCE, CAUSE_OF_DEATH_CAT
-from ..choices import MED_RESPONSIBILITY
+from ..choices import DEATH_INFO_SOURCE, DEATH_PLACE, CAUSE_OF_DEATH_CAT
+from ..choices import MED_RESPONSIBILITY, FACILITY
 
 
 class DeathReportModelMixin(models.Model):
@@ -30,7 +30,7 @@ class DeathReportModelMixin(models.Model):
     cause = models.CharField(
         max_length=50,
         choices=DEATH_INFO_SOURCE,
-        verbose_name=('What was the source o information about participant'
+        verbose_name=('What was the source of information about participant'
                       'death?'
                       ))
 
@@ -70,10 +70,38 @@ class DeathReportModelMixin(models.Model):
         verbose_name=('Who was responsible for primary medical care of the '
                       'participant during the month prior to death?'))
 
+    death_known = models.DateField(
+        validators=[date_not_future],
+        verbose_name=('When did the study team learn about the patient\'s '
+                      'death?'))
+
+    place_of_death = models.CharField(
+        verbose_name=('Name the place where the patient died?'),
+        choices=DEATH_PLACE,
+        max_length=20,)
+
+    facility_patient_died = models.CharField(
+        verbose_name=('Name of the facility where the patient died?'),
+        choices=FACILITY,
+        max_length=50,
+        blank=True,
+        null=True,)
+
+    facility_patient_died_other = OtherCharField()
+
     participant_hospitalized = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name='Was the participant hospitalised before death?')
+
+    hospitalised_facility = models.CharField(
+        verbose_name='What was the facility where the patient was hospitalised?',
+        choices=FACILITY,
+        max_length=40,
+        blank=True,
+        null=True,)
+
+    hospitalised_facility_other = OtherCharField()
 
     days_hospitalized = models.IntegerField(
         verbose_name=('For how many days was the participant hospitalised'
