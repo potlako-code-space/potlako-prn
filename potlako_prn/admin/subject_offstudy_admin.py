@@ -34,13 +34,6 @@ class SubjectOffStudyAdmin(ModelAdminMixin, admin.ModelAdmin):
                            'review_flag',
                            'general_comments',),
             }),
-        ('Fields to be completed by Physician (Final status)', {
-            'fields': ('components_rec',
-                       'components_rec_other',
-                       'cancer_treatment_rec',
-                       'treatment_intent',
-                       'date_therapy_started'),
-        }),
         audit_fieldset_tuple)
 
     radio_fields = {'reason': admin.VERTICAL,
@@ -52,10 +45,7 @@ class SubjectOffStudyAdmin(ModelAdminMixin, admin.ModelAdmin):
                     'latest_hiv_test_known': admin.VERTICAL,
                     'hiv_test_date_estimated': admin.VERTICAL,
                     'hiv_test_date_estimation': admin.VERTICAL,
-                    'review_flag': admin.VERTICAL,
-                    'components_rec': admin.VERTICAL,
-                    'cancer_treatment_rec': admin.VERTICAL,
-                    'treatment_intent': admin.VERTICAL, }
+                    'review_flag': admin.VERTICAL, }
 
     search_fields = ('subject_identifier',)
 

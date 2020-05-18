@@ -2,9 +2,18 @@ from django.apps import apps as django_apps
 from django.core.exceptions import ObjectDoesNotExist
 from edc_action_item import Action, HIGH_PRIORITY, site_action_items
 
-
 DEATH_REPORT_ACTION = 'submit-death-report'
 SUBJECT_OFFSTUDY_ACTION = 'submit-subject-offstudy'
+COORDINATOR_EXIT_ACTION = 'submit-coordinator-exit-form'
+
+
+class PotlakoCoordinatorAction(Action):
+    name = COORDINATOR_EXIT_ACTION
+    display_name = 'Submit Coordinator Exit Form'
+    reference_model = 'potlako_prn.coordinatorexit'
+    admin_site_name = 'potlako_prn_admin'
+    priority = HIGH_PRIORITY
+    singleton = True
 
 
 class DeathReportAction(Action):
@@ -50,6 +59,11 @@ class SubjectOffStudyAction(Action):
     priority = HIGH_PRIORITY
     singleton = True
 
+    def get_next_actions(self):
+        actions = [PotlakoCoordinatorAction]
+        return actions
+
 
 site_action_items.register(DeathReportAction)
 site_action_items.register(SubjectOffStudyAction)
+site_action_items.register(PotlakoCoordinatorAction)

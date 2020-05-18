@@ -1,6 +1,13 @@
 from edc_constants.constants import OTHER, POS, NEG, NONE, UNKNOWN
 
-MISSING = 'missing'
+CANCER_TREATMENT = (
+    ('radiation', 'Radiation'),
+    ('surgery', 'Surgery - Beyond biopsy'),
+    ('chemotherapy', 'Chemotherapy'),
+    ('art_for_ks', 'ART for KS'),
+    ('esophageam_stenting', 'Esophageam stenting'),
+    (OTHER, 'Other, specify')
+)
 
 CAUSE_OF_DEATH_CAT = (
     ('hiv_related', 'HIV infection or HIV related diagnosis'),
@@ -44,6 +51,12 @@ DEATH_PLACE = (
     ('home_or_community', 'Home or in the community'),
     ('facility', 'At facility'),
     ('unknown', 'Place of death unknown')
+)
+
+DISPOSITION = (
+    ('exit', 'Exit'),
+    ('schedule_call', 'Schedule Call'),
+    ('home_visit', 'Home Visit')
 )
 
 DISTRICT = (
