@@ -23,7 +23,7 @@ class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
                        'cancer_treatment_other',
                        'date_therapy_started',
                        'date_therapy_started_estimated',
-                       'date_therapy_started_estimation'
+                       'date_therapy_started_estimation',
                        'treatment_intent',
                        'patient_disposition',
                        'patient_contact_date'),
