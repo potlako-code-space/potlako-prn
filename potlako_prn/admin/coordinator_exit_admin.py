@@ -8,7 +8,7 @@ from .modeladmin_mixins import ModelAdminMixin
 
 
 @admin.register(CoordinatorExit, site=potlako_prn_admin)
-class SubjectOffStudyAdmin(ModelAdminMixin, admin.ModelAdmin):
+class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     form = CoordinatorExitForm
 
