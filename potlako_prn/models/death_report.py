@@ -23,7 +23,7 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
 
     action_name = DEATH_REPORT_ACTION
 
-    tracking_identifier = 'DR'
+    tracking_identifier_prefix = 'DR'
 
     report_datetime = models.DateTimeField(
         verbose_name='Report Date',
