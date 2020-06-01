@@ -128,7 +128,7 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
 
     def get_consent_version(self):
         subject_consent_cls = django_apps.get_model(
-            'td_maternal.subject_consent')
+            'potlako_subject.subjectconsent')
         try:
             subject_consent_obj = subject_consent_cls.objects.get(
                 subject_identifier=self.subject_identifier)
