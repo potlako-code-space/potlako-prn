@@ -10,7 +10,7 @@ from edc_base.model_validators import datetime_not_future
 from edc_base.sites.managers import CurrentSiteManager
 from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_base.utils import get_utcnow
-from edc_constants.choices import YES_NO
+from edc_constants.choices import YES_NO, YES_NO_NA
 from edc_identifier.managers import SubjectIdentifierManager
 from edc_protocol.validators import datetime_not_before_study_start
 
@@ -48,9 +48,14 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
     cause_other = OtherCharField(
         max_length=50)
 
-    perform_autopsy = models.CharField(
+    autopsy_done = models.CharField(
         max_length=3,
         choices=YES_NO,
+        verbose_name='Was an autopsy done?')
+
+    perform_autopsy = models.CharField(
+        max_length=3,
+        choices=YES_NO_NA,
         verbose_name='Will an autopsy be performed later')
 
     death_cause = models.TextField(

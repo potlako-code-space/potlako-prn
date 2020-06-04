@@ -14,7 +14,7 @@ from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
 from ..action_items import COORDINATOR_EXIT_ACTION
 from ..choices import CANCER_TREATMENT, DATE_ESTIMATION, DISPOSITION
-from ..choices import COMPONENTS_RECEIVED, TREATMENT_INTENT, REASON_FOR_EXIT
+from ..choices import COMPONENTS_RECEIVED, TREATMENT_INTENT
 
 
 class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):

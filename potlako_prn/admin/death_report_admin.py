@@ -22,6 +22,7 @@ class DeathReportAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'death_date',
                 'cause',
                 'cause_other',
+                'autopsy_done',
                 'perform_autopsy',
                 'death_cause',
                 'cause_category',
@@ -42,6 +43,7 @@ class DeathReportAdmin(ModelAdminMixin, admin.ModelAdmin):
     radio_fields = {
         'cause': admin.VERTICAL,
         'cause_category': admin.VERTICAL,
+        'autopsy_done': admin.VERTICAL,
         'perform_autopsy': admin.VERTICAL,
         'medical_responsibility': admin.VERTICAL,
         'place_of_death': admin.VERTICAL,
