@@ -1,11 +1,10 @@
 from django.core.exceptions import ValidationError
-from django.test import TestCase, tag
+from django.test import TestCase
 from edc_constants.constants import OTHER, YES
 
 from ..form_validators import CoordinatorExitFormValidator
 
 
-@tag('ce')
 class TestCoordinatorExitForm(TestCase):
 
     def test_components_rec_invalid(self):
