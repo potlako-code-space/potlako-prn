@@ -98,7 +98,7 @@ class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
         onschedule_model = django_apps.get_model(
             'potlako_subject.onschedule')
         try:
-            onschedule_obj = onschedule_model.objects.get(
+            onschedule_model.objects.get(
                 subject_identifier=self.subject_identifier)
         except onschedule_model.DoesNotExist:
             pass
