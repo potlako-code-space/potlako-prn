@@ -7,7 +7,7 @@ from ..models import SubjectOffStudy
 
 class SubjectOffStudyForm(FormValidatorMixin, forms.ModelForm):
 
-    OffstudyFormValidator.visit_model = 'potlako_subject.maternalvisit'
+    OffstudyFormValidator.visit_model = 'potlako_subject.subjectvisit'
 
     form_validator_cls = OffstudyFormValidator
 
