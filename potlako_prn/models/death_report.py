@@ -131,7 +131,8 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
         blank=True,
         null=True)
 
-    def get_consent_version(self):
+    @property
+    def consent_version(self):
         subject_consent_cls = django_apps.get_model(
             'potlako_subject.subjectconsent')
         try:
@@ -143,10 +144,6 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
                 'it before proceeding.')
         else:
             return subject_consent_obj.version
-
-    def save(self, *args, **kwargs):
-        self.consent_version = self.get_consent_version()
-        super(DeathReport, self).save(*args, **kwargs)
 
     def natural_key(self):
         return (self.subject_identifier,)
