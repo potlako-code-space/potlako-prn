@@ -49,7 +49,9 @@ class SubjectOffStudy(ActionModelMixin, BaseUuidModel):
 
     general_comments = models.TextField(
         verbose_name='Any general comments about patient exit?',
-        max_length=150,)
+        max_length=150,
+        blank=True,
+        null=True)
 
     last_visit_date = models.DateField(
         verbose_name='What was the date of patient\'s last visit?',
