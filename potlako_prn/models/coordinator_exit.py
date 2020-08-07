@@ -1,5 +1,4 @@
 from django.apps import apps as django_apps
-from django.core.exceptions import ValidationError
 from django.db import models
 from edc_action_item.model_mixins import ActionModelMixin
 from edc_base.model_fields import OtherCharField
@@ -96,31 +95,16 @@ class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
     history = HistoricalRecords()
 
     def take_off_schedule(self):
-        onschedule_model = django_apps.get_model(
+        on_schedule = django_apps.get_model(
             'potlako_subject.onschedule')
-        try:
-            onschedule_model.objects.get(
-                subject_identifier=self.subject_identifier)
-        except onschedule_model.DoesNotExist:
-            pass
-        else:
-            _, schedule = site_visit_schedules.get_by_onschedule_model(
-                onschedule_model=onschedule_model._meta.label_lower)
-            schedule.take_off_schedule(offschedule_model_obj=self)
 
-    @property
-    def consent_version(self):
-        subject_consent_cls = django_apps.get_model(
-            'potlako_subject.subjectconsent')
-        try:
-            subject_consent_obj = subject_consent_cls.objects.get(
-                subject_identifier=self.subject_identifier)
-        except subject_consent_cls.DoesNotExist:
-            raise ValidationError(
-                'Missing Subject Consent form. Please complete '
-                'it before proceeding.')
-        else:
-            return subject_consent_obj.version
+        _, schedule = site_visit_schedules.get_by_onschedule_model(
+            onschedule_model=on_schedule._meta.label_lower)
+        schedule.take_off_schedule(offschedule_model_obj=self)
+
+    def save(self, *args, **kwargs):
+        self.consent_version = None
+        super().save(*args, **kwargs)
 
     class Meta:
         app_label = 'potlako_prn'

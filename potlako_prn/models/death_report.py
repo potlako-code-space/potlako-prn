@@ -1,5 +1,3 @@
-from django.apps import apps as django_apps
-from django.core.exceptions import ValidationError
 from django.db import models
 from edc_action_item.model_mixins import ActionModelMixin
 from edc_base.model_fields import OtherCharField
@@ -130,20 +128,6 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
         verbose_name='Comments',
         blank=True,
         null=True)
-
-    @property
-    def consent_version(self):
-        subject_consent_cls = django_apps.get_model(
-            'potlako_subject.subjectconsent')
-        try:
-            subject_consent_obj = subject_consent_cls.objects.get(
-                subject_identifier=self.subject_identifier)
-        except subject_consent_cls.DoesNotExist:
-            raise ValidationError(
-                'Missing Subject Consent form. Please complete '
-                'it before proceeding.')
-        else:
-            return subject_consent_obj.version
 
     def natural_key(self):
         return (self.subject_identifier,)
