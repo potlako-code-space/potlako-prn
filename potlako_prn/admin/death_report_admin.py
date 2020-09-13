@@ -21,6 +21,7 @@ class DeathReportAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'report_datetime',
                 'death_date',
                 'cause',
+                'specify_relationship',
                 'cause_other',
                 'autopsy_done',
                 'perform_autopsy',

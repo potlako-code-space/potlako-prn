@@ -18,6 +18,7 @@ class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
                        'report_datetime',
                        'components_rec',
                        'components_rec_other',
+                       'cancer_stage',
                        'cancer_treatment_rec',
                        'cancer_treatment',
                        'cancer_treatment_other',

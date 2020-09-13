@@ -43,6 +43,12 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
                       'death?'
                       ))
 
+    specify_relationship = models.CharField(
+        verbose_name='Family member (specify relationship)',
+        max_length=30,
+        blank=True,
+        null=True)
+
     cause_other = OtherCharField(
         max_length=50)
 
@@ -74,9 +80,9 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
 
     cause_category_other = OtherCharField()
 
-    illness_duration = models.IntegerField(
+    illness_duration = models.PositiveIntegerField(
         verbose_name='Duration of acute illness directly causing death',
-        help_text='in days (If unknown enter -1)')
+        help_text='in days')
 
     medical_responsibility = models.CharField(
         choices=MED_RESPONSIBILITY,
@@ -117,7 +123,7 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
 
     hospitalised_facility_other = OtherCharField()
 
-    days_hospitalized = models.IntegerField(
+    days_hospitalized = models.PositiveIntegerField(
         verbose_name=('For how many days was the participant hospitalised'
                       ' during the illness immediately before death? '),
         help_text='in days',

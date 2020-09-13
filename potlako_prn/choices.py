@@ -1,5 +1,14 @@
 from edc_constants.constants import OTHER, POS, NEG, NONE, UNKNOWN
 
+CANCER_STAGES = (
+    ('not_yet_established', 'Not yet established'),
+    ('stage_0', 'Stage 0'),
+    ('stage_I', 'Stage I'),
+    ('stage_II', 'Stage II'),
+    ('stage_III', 'Stage III'),
+    ('stage_IV', 'Stage IV'),
+)
+
 CANCER_TREATMENT = (
     ('radiation', 'Radiation'),
     ('surgery', 'Surgery - Beyond biopsy'),
