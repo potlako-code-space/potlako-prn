@@ -52,6 +52,7 @@ class TestDeathReportForm(TestCase):
     def test_participant_hospitalized_invalid(self):
         cleaned_data = {
             'participant_hospitalized': YES,
+            'hospitalised_facility': 'athlone_hospital',
         }
         form_validator = DeathReportFormValidator(
             cleaned_data=cleaned_data)
@@ -62,6 +63,7 @@ class TestDeathReportForm(TestCase):
         cleaned_data = {
             'participant_hospitalized': YES,
             'days_hospitalized': 'blah',
+            'hospitalised_facility': 'athlone_hospital'
         }
         form_validator = DeathReportFormValidator(
             cleaned_data=cleaned_data)

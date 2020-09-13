@@ -12,9 +12,11 @@ from edc_protocol.validators import datetime_not_before_study_start
 from edc_visit_schedule.model_mixins import OffScheduleModelMixin
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
+from .list_models import ComponentsReceived
+
 from ..action_items import COORDINATOR_EXIT_ACTION
 from ..choices import CANCER_TREATMENT, DATE_ESTIMATION, DISPOSITION
-from ..choices import CANCER_STAGES, COMPONENTS_RECEIVED, TREATMENT_INTENT
+from ..choices import CANCER_STAGES, TREATMENT_INTENT
 
 
 class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
@@ -29,10 +31,9 @@ class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
         null=True,
         default=get_utcnow,)
 
-    components_rec = models.CharField(
-        verbose_name='Potlako components received (or potentially received)',
-        choices=COMPONENTS_RECEIVED,
-        max_length=50,)
+    components_rec = models.ManyToManyField(
+        ComponentsReceived,
+        verbose_name='Potlako components received (or potentially received)',)
 
     components_rec_other = OtherCharField(
         verbose_name='Other Potlako component received:',

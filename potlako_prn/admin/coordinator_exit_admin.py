@@ -31,7 +31,7 @@ class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
         }),
         audit_fieldset_tuple)
 
-    radio_fields = {'components_rec': admin.VERTICAL,
+    radio_fields = {'cancer_stage': admin.VERTICAL,
                     'cancer_treatment_rec': admin.VERTICAL,
                     'cancer_treatment': admin.VERTICAL,
                     'date_therapy_started_estimated': admin.VERTICAL,
@@ -42,3 +42,5 @@ class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
     search_fields = ('subject_identifier',)
 
     list_display = ('subject_identifier', 'report_datetime',)
+
+    filter_horizontal = ('components_rec', )

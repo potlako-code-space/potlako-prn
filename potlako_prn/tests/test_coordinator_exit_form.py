@@ -1,15 +1,20 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from edc_constants.constants import OTHER, YES
+from edc_base.utils import get_utcnow
+from edc_constants.constants import OTHER, YES, NO
 
 from ..form_validators import CoordinatorExitFormValidator
+from .models import ListModel
 
 
 class TestCoordinatorExitForm(TestCase):
 
+    def setUp(self):
+        ListModel.objects.create(name=OTHER)
+
     def test_components_rec_invalid(self):
         cleaned_data = {
-            'components_rec': OTHER,
+            'components_rec': ListModel.objects.all(),
         }
         form_validator = CoordinatorExitFormValidator(
             cleaned_data=cleaned_data)
@@ -18,7 +23,7 @@ class TestCoordinatorExitForm(TestCase):
 
     def test_components_rec_valid(self):
         cleaned_data = {
-            'components_rec': OTHER,
+            'components_rec': ListModel.objects.all(),
             'components_rec_other': 'blah',
         }
         form_validator = CoordinatorExitFormValidator(
@@ -41,6 +46,8 @@ class TestCoordinatorExitForm(TestCase):
         cleaned_data = {
             'cancer_treatment_rec': YES,
             'cancer_treatment': 'blah',
+            'date_therapy_started': get_utcnow().date(),
+            'date_therapy_started_estimated': NO
         }
         form_validator = CoordinatorExitFormValidator(
             cleaned_data=cleaned_data)
