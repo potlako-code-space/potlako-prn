@@ -183,6 +183,7 @@ REASON_FOR_EXIT = (
      'Patient or clinician declines further evaluation'),
     ('patient_requests_removal', 'Patient requests removal from Potlako'),
     ('clinician_requests_removal', 'Clinician requests removal from Potlako'),
+    (OTHER, 'Other (specify)'),
 )
 
 TREATMENT_INTENT = (

@@ -19,7 +19,10 @@ class SubjectOffStudyAdmin(ModelAdminMixin, admin.ModelAdmin):
                            'report_datetime',
                            'offstudy_date',
                            'reason',
+                           'reason_other',
                            'last_visit_date',
+                           'last_visit_date_estimated',
+                           'last_visit_date_estimation',
                            'last_visit_facility',
                            'last_visit_facility_other',
                            'ltfu_criteria_met',
@@ -37,6 +40,8 @@ class SubjectOffStudyAdmin(ModelAdminMixin, admin.ModelAdmin):
         audit_fieldset_tuple)
 
     radio_fields = {'reason': admin.VERTICAL,
+                    'last_visit_date_estimated': admin.VERTICAL,
+                    'last_visit_date_estimation': admin.VERTICAL,
                     'last_visit_facility': admin.VERTICAL,
                     'ltfu_criteria_met': admin.VERTICAL,
                     'patient_relocated': admin.VERTICAL,

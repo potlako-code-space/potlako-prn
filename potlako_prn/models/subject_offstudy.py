@@ -45,6 +45,8 @@ class SubjectOffStudy(ActionModelMixin, BaseUuidModel):
         choices=REASON_FOR_EXIT,
         null=True,)
 
+    reason_other = OtherCharField()
+
     general_comments = models.TextField(
         verbose_name='Any general comments about patient exit?',
         max_length=150,
@@ -54,6 +56,19 @@ class SubjectOffStudy(ActionModelMixin, BaseUuidModel):
     last_visit_date = models.DateField(
         verbose_name='What was the date of patient\'s last visit?',
         validators=[date_not_future, ],)
+
+    last_visit_date_estimated = models.CharField(
+        verbose_name='Is the patient\'s last visit date estimated?',
+        choices=YES_NO,
+        max_length=3)
+
+    last_visit_date_estimation = models.CharField(
+        verbose_name='Which part of the date was estimated, if any?',
+        choices=DATE_ESTIMATION,
+        max_length=15,
+        blank=True,
+        null=True
+    )
 
     last_visit_facility = models.CharField(
         verbose_name='What was the facility of the patient\'s last visit',

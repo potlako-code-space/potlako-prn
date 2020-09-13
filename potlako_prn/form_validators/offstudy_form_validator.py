@@ -1,5 +1,6 @@
 from django import forms
 from django.apps import apps as django_apps
+from edc_constants.constants import YES
 from edc_form_validators import FormValidator
 
 
@@ -12,6 +13,32 @@ class OffstudyFormValidator(FormValidator):
             field='reason',
             other_specify_field='reason_other',
         )
+
+        self.required_if(
+            YES,
+            field='last_visit_date_estimated',
+            field_required='last_visit_date_estimation')
+
+        self.validate_other_specify(field='last_visit_facility',)
+
+        fields_required = ['new_facility_name', 'new_facility_type']
+        for field_required in fields_required:
+            self.required_if(
+                YES,
+                field='patient_relocated',
+                field_required=field_required
+            )
+
+        required_fields = ['hiv_test_date', 'hiv_test_date_estimated']
+        for required_field in required_fields:
+            self.required_if(
+                YES,
+                field='latest_hiv_test_known',
+                field_required=required_field)
+
+        self.required_if(
+            YES, field='hiv_test_date_estimated',
+            field_required='hiv_test_date_estimation')
 
         self.validate_against_latest_visit()
 
