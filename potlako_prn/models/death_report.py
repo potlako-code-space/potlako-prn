@@ -137,7 +137,6 @@ class DeathReport(SiteModelMixin, ActionModelMixin, BaseUuidModel):
 
     def natural_key(self):
         return (self.subject_identifier,)
-
     natural_key.dependencies = ['sites.Site']
 
     on_site = CurrentSiteManager()

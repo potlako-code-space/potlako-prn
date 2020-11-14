@@ -65,8 +65,6 @@ DEATH_PLACE = (
 
 DISPOSITION = (
     ('exit', 'Exit'),
-    ('schedule_call', 'Schedule Call'),
-    ('home_visit', 'Home Visit')
 )
 
 DISTRICT = (

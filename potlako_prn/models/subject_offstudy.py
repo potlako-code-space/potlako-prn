@@ -21,6 +21,10 @@ class SubjectOffStudy(ActionModelMixin, BaseUuidModel):
     action_name = SUBJECT_OFFSTUDY_ACTION
 
     tracking_identifier_prefix = 'SO'
+    
+    subject_identifier = models.CharField(
+        max_length=50,
+        unique=True)
 
     schedule = models.CharField(
         verbose_name='Are scheduled data being submitted on the exit date?',
@@ -136,6 +140,10 @@ class SubjectOffStudy(ActionModelMixin, BaseUuidModel):
         verbose_name='Flag for physician review',
         choices=YES_NO,
         max_length=3,)
+    
+    def natural_key(self):
+        return (self.subject_identifier)
+    natural_key.dependencies = ['sites.Site']
 
     objects = SubjectIdentifierManager()
 
