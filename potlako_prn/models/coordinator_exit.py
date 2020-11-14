@@ -17,7 +17,7 @@ from .list_models import ComponentsReceived
 from ..action_items import COORDINATOR_EXIT_ACTION
 from ..choices import CANCER_TREATMENT, DATE_ESTIMATION, DISPOSITION
 from ..choices import CANCER_STAGES, TREATMENT_INTENT
-
+    
 
 class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
 
@@ -90,6 +90,7 @@ class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
     patient_disposition = models.CharField(
         verbose_name='What is the patient\'s final disposition?',
         choices=DISPOSITION,
+        default='exit',
         max_length=15)
 
     patient_contact_date = models.DateField(
