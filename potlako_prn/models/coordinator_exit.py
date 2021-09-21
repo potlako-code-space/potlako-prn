@@ -9,14 +9,14 @@ from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 from edc_identifier.managers import SubjectIdentifierManager
 from edc_protocol.validators import datetime_not_before_study_start
+
 from edc_visit_schedule.model_mixins import OffScheduleModelMixin
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
-from .list_models import ComponentsReceived
-
 from ..action_items import COORDINATOR_EXIT_ACTION
-from ..choices import CANCER_TREATMENT, DATE_ESTIMATION, DISPOSITION
 from ..choices import CANCER_STAGES, TREATMENT_INTENT
+from ..choices import CANCER_TREATMENT, DATE_ESTIMATION, DISPOSITION
+from .list_models import ComponentsReceived
 
 
 class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
@@ -102,6 +102,9 @@ class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
     objects = SubjectIdentifierManager()
 
     history = HistoricalRecords()
+
+    def __str__(self):
+        return f'{self.subject_identifier}'
 
     def take_off_schedule(self):
         on_schedule = django_apps.get_model(
