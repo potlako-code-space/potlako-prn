@@ -10,8 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import configparser
 import os
 import sys
+
+from django.core.management.color import color_style
+
+# from .logging import LOGGING
+style = color_style()
 
 ETC_DIR = '/etc'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -19,6 +25,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 APP_NAME = 'potlako_prn'
 SITE_ID = 1
+
+ETC_DIR = os.path.join(BASE_DIR, 'etc')
+
+CONFIG_FILE = f'potlako.ini'
+
+CONFIG_PATH = os.path.join('/etc', 'potlako', CONFIG_FILE)
+sys.stdout.write(style.SUCCESS(f'  * Reading config from {CONFIG_FILE}\n'))
+config = configparser.ConfigParser()
+config.read(CONFIG_PATH)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -29,13 +44,17 @@ SECRET_KEY = 'gc2s5qt4g7(&scfo8xqra6wrn0%a!io4)g^yp@*nwa4e1hre7_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-KEY_PATH = os.path.join(BASE_DIR, 'crypto_fields')
+# KEY_PATH = os.path.join(BASE_DIR, 'crypto_fields')
 
 ALLOWED_HOSTS = []
+
+# EDC SMS configuration
+BASE_API_URL = config['edc_sms']['base_api_url']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_q',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,12 +62,28 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'rest_framework.authtoken',
     'django_crypto_fields.apps.AppConfig',
     'edc_action_item.apps.AppConfig',
+    'edc_sync.apps.AppConfig',
+    'edc_sync_files.apps.AppConfig',
     'edc_base.apps.AppConfig',
+    'edc_consent.apps.AppConfig',
     'edc_device.apps.AppConfig',
     'edc_identifier.apps.AppConfig',
+    'edc_locator.apps.AppConfig',
+    'edc_timepoint.apps.AppConfig',
     'edc_prn.apps.AppConfig',
+    'edc_protocol.apps.AppConfig',
+    'edc_registration.apps.AppConfig',
+    'edc_visit_schedule.apps.AppConfig',
+    'potlako_subject.apps.AppConfig',
+    'potlako_visit_schedule.apps.AppConfig',
+    'potlako_prn.apps.EdcFacilityAppConfig',
+    'potlako_prn.apps.EdcAppointmentAppConfig',
+    'potlako_prn.apps.EdcVisitTrackingAppConfig',
+    'potlako_prn.apps.EdcSmsAppConfig',
     'potlako_prn.apps.AppConfig',
 ]
 
@@ -125,11 +160,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+COUNTRY = 'botswana'
+
 DASHBOARD_URL_NAMES = {
     'subject_listboard_url': 'potlako_dashboard:subject_listboard_url',
     'screening_listboard_url': 'potlako_dashboard:screening_listboard_url',
     'subject_dashboard_url': 'potlako_dashboard:subject_dashboard_url',
 }
+
+EDC_SYNC_SERVER_IP = None
+EDC_SYNC_FILES_REMOTE_HOST = None
+EDC_SYNC_FILES_USER = None
+EDC_SYNC_FILES_USB_VOLUME = None
+
+HOLIDAY_FILE = os.path.join(BASE_DIR, 'holidays.csv')
+
+COMMUNITIES = config['communities']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
