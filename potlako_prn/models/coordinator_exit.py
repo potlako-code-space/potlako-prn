@@ -85,6 +85,8 @@ class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
     treatment_intent = models.CharField(
         verbose_name='At time of exit, what was treatment intent?',
         choices=TREATMENT_INTENT,
+        blank=True,
+        null=True,
         max_length=10,)
 
     patient_disposition = models.CharField(

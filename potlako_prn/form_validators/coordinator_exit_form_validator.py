@@ -1,4 +1,5 @@
-from edc_constants.constants import OTHER, YES
+from dataclasses import field
+from edc_constants.constants import OTHER, YES, NO, UNKNOWN
 from edc_form_validators import FormValidator
 
 
@@ -12,7 +13,7 @@ class CoordinatorExitFormValidator(FormValidator):
             field_other='components_rec_other')
 
         required_fields = ['cancer_treatment', 'date_therapy_started',
-                           'date_therapy_started_estimated']
+                           'date_therapy_started_estimated','treatment_intent']
         for required_field in required_fields:
             self.required_if(
                 YES,
@@ -27,3 +28,4 @@ class CoordinatorExitFormValidator(FormValidator):
             YES,
             field='date_therapy_started_estimated',
             field_required='date_therapy_started_estimation')
+

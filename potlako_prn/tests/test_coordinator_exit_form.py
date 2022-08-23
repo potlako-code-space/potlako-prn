@@ -1,12 +1,12 @@
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_base.utils import get_utcnow
 from edc_constants.constants import OTHER, YES, NO
 
 from ..form_validators import CoordinatorExitFormValidator
 from .models import ListModel
 
-
+@tag('ce')
 class TestCoordinatorExitForm(TestCase):
 
     def setUp(self):
@@ -47,7 +47,8 @@ class TestCoordinatorExitForm(TestCase):
             'cancer_treatment_rec': YES,
             'cancer_treatment': 'blah',
             'date_therapy_started': get_utcnow().date(),
-            'date_therapy_started_estimated': NO
+            'date_therapy_started_estimated': NO,
+            'treatment_intent': 'blah',
         }
         form_validator = CoordinatorExitFormValidator(
             cleaned_data=cleaned_data)
@@ -97,3 +98,31 @@ class TestCoordinatorExitForm(TestCase):
             form_validator.validate()
         except ValidationError as e:
             self.fail(f'ValidationError unexpectedly raised. Got{e}')
+
+    def test_treatment_intent_valid(self): 
+        cleaned_data = {
+            'cancer_treatment_rec': YES,
+            'cancer_treatment': 'blah',
+            'treatment_intent': 'blah',
+            'date_therapy_started': get_utcnow().date(),
+            'date_therapy_started_estimated': NO
+        }
+        form_validator = CoordinatorExitFormValidator(
+            cleaned_data=cleaned_data)
+        try:
+            form_validator.validate()
+        except ValidationError as e:
+            self.fail(f'ValidationError unexpectedly raised. Got{e}')
+            
+            
+    def test_treatment_intent_invalid(self): 
+        cleaned_data = {
+            'cancer_treatment_rec': YES,
+            'cancer_treatment': 'blah',
+            'date_therapy_started': get_utcnow().date(),
+            'date_therapy_started_estimated': NO
+        }
+        form_validator = CoordinatorExitFormValidator(
+            cleaned_data=cleaned_data)
+        self.assertRaises(ValidationError, form_validator.clean)
+        self.assertIn('treatment_intent', form_validator._errors)           

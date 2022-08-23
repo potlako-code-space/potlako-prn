@@ -1,5 +1,4 @@
 from django.db import models
-from edc_action_item.model_mixins import ActionModelMixin
 from edc_base.model_fields import OtherCharField
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
@@ -9,6 +8,8 @@ from edc_constants.choices import YES_NO
 from edc_identifier.managers import SubjectIdentifierManager
 from edc_protocol.validators import (
     date_not_before_study_start, datetime_not_before_study_start)
+
+from edc_action_item.model_mixins import ActionModelMixin
 
 from ..action_items import SUBJECT_OFFSTUDY_ACTION
 from ..choices import FACILITY, FACILITY_TYPE, DATE_ESTIMATION
@@ -21,7 +22,7 @@ class SubjectOffStudy(ActionModelMixin, BaseUuidModel):
     action_name = SUBJECT_OFFSTUDY_ACTION
 
     tracking_identifier_prefix = 'SO'
-    
+
     subject_identifier = models.CharField(
         max_length=50,
         unique=True)
@@ -140,9 +141,10 @@ class SubjectOffStudy(ActionModelMixin, BaseUuidModel):
         verbose_name='Flag for physician review',
         choices=YES_NO,
         max_length=3,)
-    
+
     def natural_key(self):
         return (self.subject_identifier)
+
     natural_key.dependencies = ['sites.Site']
 
     objects = SubjectIdentifierManager()
