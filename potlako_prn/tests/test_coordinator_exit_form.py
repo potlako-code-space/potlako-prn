@@ -6,6 +6,7 @@ from edc_constants.constants import OTHER, YES, NO
 from ..form_validators import CoordinatorExitFormValidator
 from .models import ListModel
 
+
 @tag('ce')
 class TestCoordinatorExitForm(TestCase):
 
@@ -99,7 +100,7 @@ class TestCoordinatorExitForm(TestCase):
         except ValidationError as e:
             self.fail(f'ValidationError unexpectedly raised. Got{e}')
 
-    def test_treatment_intent_valid(self): 
+    def test_treatment_intent_valid(self):
         cleaned_data = {
             'cancer_treatment_rec': YES,
             'cancer_treatment': 'blah',
@@ -113,9 +114,8 @@ class TestCoordinatorExitForm(TestCase):
             form_validator.validate()
         except ValidationError as e:
             self.fail(f'ValidationError unexpectedly raised. Got{e}')
-            
-            
-    def test_treatment_intent_invalid(self): 
+
+    def test_treatment_intent_invalid(self):
         cleaned_data = {
             'cancer_treatment_rec': YES,
             'cancer_treatment': 'blah',
@@ -125,4 +125,4 @@ class TestCoordinatorExitForm(TestCase):
         form_validator = CoordinatorExitFormValidator(
             cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.clean)
-        self.assertIn('treatment_intent', form_validator._errors)           
+        self.assertIn('treatment_intent', form_validator._errors)

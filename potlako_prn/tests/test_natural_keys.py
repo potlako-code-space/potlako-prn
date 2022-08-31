@@ -34,6 +34,11 @@ class TestNaturalKey(TestCase):
             'confirm_identity': clinicial_call_enrolment.national_identity,
             'version': '1'}
 
+        mommy.make_recipe(
+            'potlako_subject.verbalconsent',
+            screening_identifier=self.subject_screening.screening_identifier,
+            )
+
         self.subject_consent = mommy.make_recipe(
             'potlako_subject.subjectconsent',
             **self.options)
