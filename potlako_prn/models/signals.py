@@ -15,9 +15,8 @@ def subject_offstudy_on_post_save(sender, instance, raw, created, **kwargs):
     offstudy model.
     """
     if not raw:
-        if not created:
-            trigger_action_item(CoordinatorExit, COORDINATOR_EXIT_ACTION,
-                                instance.subject_identifier)
+        trigger_action_item(CoordinatorExit, COORDINATOR_EXIT_ACTION,
+                            instance.subject_identifier)
 
 
 @receiver(post_save, weak=False, sender=DeathReport,
