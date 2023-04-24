@@ -8,17 +8,6 @@ from .death_report import DeathReport
 from .subject_offstudy import SubjectOffStudy
 
 
-@receiver(post_save, weak=False, sender=SubjectOffStudy,
-          dispatch_uid='subject_offstudy_on_post_save')
-def subject_offstudy_on_post_save(sender, instance, raw, created, **kwargs):
-    """Create Coordinator exit form action item after completing the
-    offstudy model.
-    """
-    if not raw:
-        trigger_action_item(CoordinatorExit, COORDINATOR_EXIT_ACTION,
-                            instance.subject_identifier)
-
-
 @receiver(post_save, weak=False, sender=DeathReport,
           dispatch_uid='death_report_on_post_save')
 def death_report_on_post_save(sender, instance, raw, created, **kwargs):
@@ -32,7 +21,6 @@ def death_report_on_post_save(sender, instance, raw, created, **kwargs):
 
 
 def trigger_action_item(model_cls, action_name, subject_identifier):
-
     action_cls = site_action_items.get(
         model_cls.action_name)
     action_item_model_cls = action_cls.action_item_model_cls()
