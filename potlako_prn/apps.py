@@ -9,7 +9,6 @@ class AppConfig(DjangoAppConfig):
 
     def ready(self):
         from .models import death_report_on_post_save
-        from .models import subject_offstudy_on_post_save
 
 
 if settings.APP_NAME == 'potlako_prn':
