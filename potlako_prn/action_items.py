@@ -42,10 +42,11 @@ class DeathReportAction(Action):
         try:
             potlako_deathreport_cls.objects.get(
                 subject_identifier=subject_identifier)
-            if not offstudy:
-                actions = [SubjectOffStudyAction]
         except ObjectDoesNotExist:
             pass
+        else:
+            if not offstudy:
+                actions = [SubjectOffStudyAction]
         return actions
 
 
@@ -60,7 +61,22 @@ class SubjectOffStudyAction(Action):
     singleton = True
 
     def get_next_actions(self):
+        potlako_deathreport_cls = django_apps.get_model(
+            'potlako_prn.deathreport')
+        action_item_cls = django_apps.get_model('edc_action_item.actionitem')
+        subject_identifier = self.reference_model_obj.subject_identifier
+        off_study_reason = self.reference_model_obj.reason
+        death_actions = action_item_cls.objects.filter(
+            subject_identifier=subject_identifier,
+            action_type__name='submit-death-report')
         actions = [PotlakoCoordinatorAction]
+
+        try:
+            potlako_deathreport_cls.objects.get(
+                subject_identifier=subject_identifier)
+        except ObjectDoesNotExist:
+            if not death_actions and off_study_reason == 'death':
+                actions.append(DeathReportAction)
         return actions
 
 

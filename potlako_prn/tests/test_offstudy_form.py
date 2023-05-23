@@ -2,15 +2,16 @@ from django.core.exceptions import ValidationError
 from django.dispatch import receiver
 from django.test import TestCase, tag
 from edc_base.utils import get_utcnow
-from edc_constants.constants import OTHER
+from edc_constants.constants import DEAD, OTHER
 from edc_facility.import_holidays import import_holidays
 from model_mommy import mommy
 
 from edc_action_item.site_action_items import site_action_items
 from potlako_prn.models.coordinator_exit import CoordinatorExit
 
-from ..action_items import COORDINATOR_EXIT_ACTION
+from ..action_items import COORDINATOR_EXIT_ACTION, DEATH_REPORT_ACTION
 from ..form_validators import OffstudyFormValidator
+from ..models import DeathReport
 
 
 @tag('ofs')
@@ -61,7 +62,8 @@ class TestOffstudyForm(TestCase):
 
     def test_coordinator_exit_triggered(self):
 
-        subject_consent = mommy.make_recipe('potlako_subject.subjectconsent', **self.options)
+        subject_consent = mommy.make_recipe('potlako_subject.subjectconsent',
+                                            **self.options)
 
         mommy.make_recipe('potlako_prn.subjectoffstudy',
                           subject_identifier=subject_consent.subject_identifier)
@@ -72,3 +74,19 @@ class TestOffstudyForm(TestCase):
         self.assertEqual(action_item_model_cls.objects.filter(
             subject_identifier=subject_consent.subject_identifier,
             action_type__name=COORDINATOR_EXIT_ACTION).count(), 1)
+
+    def test_death_report_exit_triggered(self):
+
+        subject_consent = mommy.make_recipe('potlako_subject.subjectconsent',
+                                            **self.options)
+
+        mommy.make_recipe('potlako_prn.subjectoffstudy',
+                          reason='death',
+                          subject_identifier=subject_consent.subject_identifier)
+
+        action_cls = site_action_items.get(DeathReport.action_name)
+        action_item_model_cls = action_cls.action_item_model_cls()
+
+        self.assertEqual(action_item_model_cls.objects.filter(
+            subject_identifier=subject_consent.subject_identifier,
+            action_type__name=DEATH_REPORT_ACTION).count(), 1)
