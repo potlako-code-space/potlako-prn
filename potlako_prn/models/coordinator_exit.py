@@ -16,7 +16,7 @@ from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 from ..action_items import COORDINATOR_EXIT_ACTION
 from ..choices import CANCER_STAGES, TREATMENT_INTENT
 from ..choices import CANCER_TREATMENT, DATE_ESTIMATION, DISPOSITION
-from .list_models import ComponentsReceived
+from .list_models import ComponentsReceived, TreatmentReceived
 
 
 class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
@@ -59,6 +59,11 @@ class CoordinatorExit(OffScheduleModelMixin, ActionModelMixin, BaseUuidModel):
         max_length=25,
         blank=True,
         null=True,)
+    
+    cancer_treatments = models.ManyToManyField(
+        TreatmentReceived,
+        verbose_name='What specific cancer treatment was received?',
+        )
 
     cancer_treatment_other = OtherCharField()
 
