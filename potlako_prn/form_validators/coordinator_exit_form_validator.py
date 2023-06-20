@@ -14,7 +14,7 @@ class CoordinatorExitFormValidator(FormValidator):
         
         self.m2m_other_specify(
             OTHER, m2m_field='cancer_treatments',
-            field_other='ancer_treatment_other')
+            field_other='cancer_treatment_other')
 
         required_fields = ['cancer_treatments', 'date_therapy_started',
                            'date_therapy_started_estimated','treatment_intent']
@@ -24,10 +24,7 @@ class CoordinatorExitFormValidator(FormValidator):
                 field='cancer_treatment_rec',
                 field_required=required_field)
 
-        self.validate_other_specify(
-            field='cancer_treatment'
-        )
-
+    
         self.required_if(
             YES,
             field='date_therapy_started_estimated',
