@@ -20,7 +20,7 @@ class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
                        'components_rec_other',
                        'cancer_stage',
                        'cancer_treatment_rec',
-                       'cancer_treatment',
+                       'cancer_treatments',
                        'cancer_treatment_other',
                        'date_therapy_started',
                        'date_therapy_started_estimated',
@@ -33,7 +33,6 @@ class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     radio_fields = {'cancer_stage': admin.VERTICAL,
                     'cancer_treatment_rec': admin.VERTICAL,
-                    'cancer_treatment': admin.VERTICAL,
                     'date_therapy_started_estimated': admin.VERTICAL,
                     'date_therapy_started_estimation': admin.VERTICAL,
                     'treatment_intent': admin.VERTICAL,
@@ -43,4 +42,4 @@ class CoordinatorExitAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     list_display = ('subject_identifier', 'report_datetime',)
 
-    filter_horizontal = ('components_rec', )
+    filter_horizontal = ('components_rec', 'cancer_treatments')
