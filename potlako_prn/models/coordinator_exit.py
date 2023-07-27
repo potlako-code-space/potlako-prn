@@ -92,8 +92,8 @@ class CoordinatorExit(ActionModelMixin, BaseUuidModel):
     patient_disposition = models.CharField(
         verbose_name='What is the patient\'s final disposition?',
         choices=DISPOSITION,
-        default='exit',
-        max_length=15)
+        default='tag_for_endpoint_recording',
+        max_length=30)
 
     patient_contact_date = models.DateField(
         verbose_name='If call/visit above, date for patient call/visit ',
