@@ -64,7 +64,7 @@ DEATH_PLACE = (
 )
 
 DISPOSITION = (
-    ('exit', 'Exit'),
+    ('tag_for_endpoint_recording', 'Tag for endpoint recording'),
 )
 
 DISTRICT = (
