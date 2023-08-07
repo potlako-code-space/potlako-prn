@@ -6,13 +6,17 @@ from edc_base.model_mixins import BaseUuidModel
 from edc_base.model_validators import date_is_future, date_not_future, datetime_not_future
 from edc_base.utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
-from edc_identifier.managers import SubjectIdentifierManager
 from edc_protocol.validators import datetime_not_before_study_start
 
 from .list_models import ComponentsReceived, TreatmentReceived
 from ..action_items import COORDINATOR_EXIT_ACTION
 from ..choices import CANCER_STAGES, TREATMENT_INTENT
 from ..choices import CANCER_TREATMENT, DATE_ESTIMATION, DISPOSITION
+
+
+class CoordinatorExitManager(models.Manager):
+    def get_by_natural_key(self, subject_identifier):
+        return self.get(subject_identifier=subject_identifier, )
 
 
 class CoordinatorExit(ActionModelMixin, BaseUuidModel):
@@ -101,7 +105,7 @@ class CoordinatorExit(ActionModelMixin, BaseUuidModel):
         blank=True,
         null=True, )
 
-    objects = SubjectIdentifierManager()
+    objects = CoordinatorExitManager()
 
     history = HistoricalRecords()
 
@@ -111,6 +115,9 @@ class CoordinatorExit(ActionModelMixin, BaseUuidModel):
     def save(self, *args, **kwargs):
         self.consent_version = None
         super().save(*args, **kwargs)
+
+    def natural_key(self):
+        return (self.subject_identifier,)
 
     class Meta:
         app_label = 'potlako_prn'
