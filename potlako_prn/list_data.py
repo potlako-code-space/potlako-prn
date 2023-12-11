@@ -13,7 +13,22 @@ list_data = {
         (NONE, 'None'),
         (OTHER, 'Other (specify)'),
     ],
+
+
+    'potlako_prn.treatmentreceived': [
+        ('radiation', 'Radiation'),
+        ('surgery',
+         'Surgery - Beyond biopsy'),
+        ('chemotherapy',
+         'Chemotherapy'),
+        ('art_for_ks',
+         'ART for KS'),
+        ('esophageam_stenting', 'Esophageam stenting'),
+        (NONE, 'None'),
+        (OTHER, 'Other (specify)'),
+    ],
 }
 
 preload_data = PreloadData(
     list_data=list_data)
+

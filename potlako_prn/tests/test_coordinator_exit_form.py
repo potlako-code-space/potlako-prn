@@ -20,7 +20,28 @@ class TestCoordinatorExitForm(TestCase):
         form_validator = CoordinatorExitFormValidator(
             cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.clean)
-        self.assertIn('components_rec_other', form_validator._errors)
+        self.assertIn('components_rec_other', form_validator._errors) 
+
+    def test_cancer_treatments_invalid(self):
+        cleaned_data = {
+            'cancer_treatments': ListModel.objects.all(),
+        }
+        form_validator = CoordinatorExitFormValidator(
+            cleaned_data=cleaned_data)
+        self.assertRaises(ValidationError, form_validator.clean)
+        self.assertIn('cancer_treatment_other', form_validator._errors) 
+
+    def test_cancer_treatments_valid(self):
+        cleaned_data = {
+            'cancer_treatments': ListModel.objects.all(),
+            'cancer_treatment_other': 'blah',
+        }
+        form_validator = CoordinatorExitFormValidator(
+            cleaned_data=cleaned_data)
+        try:
+            form_validator.validate()
+        except ValidationError as e:
+            self.fail(f'ValidationError unexpectedly raised. Got{e}')      
 
     def test_components_rec_valid(self):
         cleaned_data = {
@@ -41,36 +62,17 @@ class TestCoordinatorExitForm(TestCase):
         form_validator = CoordinatorExitFormValidator(
             cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.clean)
-        self.assertIn('cancer_treatment', form_validator._errors)
+        self.assertIn('cancer_treatments', form_validator._errors)
 
     def test_cancer_treatment_rec_valid(self):
+        ListModel.objects.all().delete()
+        ListModel.objects.create(name="blah")
         cleaned_data = {
             'cancer_treatment_rec': YES,
-            'cancer_treatment': 'blah',
+            'cancer_treatments': ListModel.objects.all(),
             'date_therapy_started': get_utcnow().date(),
             'date_therapy_started_estimated': NO,
             'treatment_intent': 'blah',
-        }
-        form_validator = CoordinatorExitFormValidator(
-            cleaned_data=cleaned_data)
-        try:
-            form_validator.validate()
-        except ValidationError as e:
-            self.fail(f'ValidationError unexpectedly raised. Got{e}')
-
-    def test_cancer_treatment_invalid(self):
-        cleaned_data = {
-            'cancer_treatment': OTHER,
-        }
-        form_validator = CoordinatorExitFormValidator(
-            cleaned_data=cleaned_data)
-        self.assertRaises(ValidationError, form_validator.clean)
-        self.assertIn('cancer_treatment_other', form_validator._errors)
-
-    def test_cancer_treatment_valid(self):
-        cleaned_data = {
-            'cancer_treatment': OTHER,
-            'cancer_treatment_other': 'blah',
         }
         form_validator = CoordinatorExitFormValidator(
             cleaned_data=cleaned_data)
@@ -101,9 +103,11 @@ class TestCoordinatorExitForm(TestCase):
             self.fail(f'ValidationError unexpectedly raised. Got{e}')
 
     def test_treatment_intent_valid(self):
+        ListModel.objects.all().delete()
+        ListModel.objects.create(name="blah")
         cleaned_data = {
             'cancer_treatment_rec': YES,
-            'cancer_treatment': 'blah',
+            'cancer_treatments': ListModel.objects.all(),
             'treatment_intent': 'blah',
             'date_therapy_started': get_utcnow().date(),
             'date_therapy_started_estimated': NO
@@ -116,9 +120,11 @@ class TestCoordinatorExitForm(TestCase):
             self.fail(f'ValidationError unexpectedly raised. Got{e}')
 
     def test_treatment_intent_invalid(self):
+        ListModel.objects.all().delete()
+        ListModel.objects.create(name="blah")
         cleaned_data = {
             'cancer_treatment_rec': YES,
-            'cancer_treatment': 'blah',
+            'cancer_treatments': ListModel.objects.all(),
             'date_therapy_started': get_utcnow().date(),
             'date_therapy_started_estimated': NO
         }
@@ -126,3 +132,25 @@ class TestCoordinatorExitForm(TestCase):
             cleaned_data=cleaned_data)
         self.assertRaises(ValidationError, form_validator.clean)
         self.assertIn('treatment_intent', form_validator._errors)
+
+
+    def test_cancer_treatments_invalid(self):
+        cleaned_data = {
+            'cancer_treatments': ListModel.objects.all(),
+        }
+        form_validator = CoordinatorExitFormValidator(
+            cleaned_data=cleaned_data)
+        self.assertRaises(ValidationError, form_validator.clean)
+        self.assertIn('cancer_treatment_other', form_validator._errors)
+
+    def test_cancer_treatments_valid(self):
+        cleaned_data = {
+            'cancer_treatments': ListModel.objects.all(),
+            'cancer_treatment_other': 'blah',
+        }
+        form_validator = CoordinatorExitFormValidator(
+            cleaned_data=cleaned_data)
+        try:
+            form_validator.validate()
+        except ValidationError as e:
+            self.fail(f'ValidationError unexpectedly raised. Got{e}')
