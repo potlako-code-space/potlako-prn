@@ -1,5 +1,4 @@
-from dataclasses import field
-from edc_constants.constants import OTHER, YES, NO, UNKNOWN
+from edc_constants.constants import OTHER, YES
 from edc_form_validators import FormValidator
 
 
@@ -11,22 +10,20 @@ class CoordinatorExitFormValidator(FormValidator):
         self.m2m_other_specify(
             OTHER, m2m_field='components_rec',
             field_other='components_rec_other')
-        
+
         self.m2m_other_specify(
             OTHER, m2m_field='cancer_treatments',
             field_other='cancer_treatment_other')
 
-        required_fields = ['cancer_treatments', 'date_therapy_started',
-                           'date_therapy_started_estimated','treatment_intent']
+        required_fields = ['date_therapy_started',
+                           'date_therapy_started_estimated', 'treatment_intent']
         for required_field in required_fields:
             self.required_if(
                 YES,
                 field='cancer_treatment_rec',
                 field_required=required_field)
 
-    
         self.required_if(
             YES,
             field='date_therapy_started_estimated',
             field_required='date_therapy_started_estimation')
-
