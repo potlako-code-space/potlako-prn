@@ -62,6 +62,7 @@ class CoordinatorExit(ActionModelMixin, BaseUuidModel):
     cancer_treatments = models.ManyToManyField(
         TreatmentReceived,
         verbose_name='What specific cancer treatment was received?',
+        blank=True,
     )
 
     cancer_treatment_other = OtherCharField()
