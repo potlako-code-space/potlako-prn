@@ -2,8 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from edc_action_item.site_action_items import site_action_items
 
-from ..action_items import COORDINATOR_EXIT_ACTION, SUBJECT_OFFSTUDY_ACTION
-from .coordinator_exit import CoordinatorExit
+from ..action_items import SUBJECT_OFFSTUDY_ACTION
 from .death_report import DeathReport
 from .subject_offstudy import SubjectOffStudy
 
@@ -14,8 +13,7 @@ def death_report_on_post_save(sender, instance, raw, created, **kwargs):
     """Create Offstudy form action item after completing the
     death report model.
     """
-    if not raw:
-        if not created:
+    if not raw and created:
             trigger_action_item(SubjectOffStudy, SUBJECT_OFFSTUDY_ACTION,
                                 instance.subject_identifier)
 
